@@ -19,11 +19,14 @@ export default function Login(){
     async function signIn(event){
         event.preventDefault();
         setDisabled(true);
-        try{
-            const res = await axios.post("localhost:5000/login",{
+        
+        const body = JSON.stringify({
                 email: loginEmail,
                 password: loginPassword
-            });
+        });
+
+        try{
+            const res = await axios.post("localhost:5000/login",body);
             const {token, name} = res.data;
             setToken(token);
             setName(name);
@@ -68,7 +71,7 @@ export default function Login(){
 
 export const MainDiv = styled.div`
     display: flex;
-    min-height: 667px;
+    min-height: 100vh;
     justify-content: center;
     align-items: center;
     flex-direction: column;
