@@ -59,8 +59,8 @@ export default function Register(){
                     <form onSubmit={registerNew}>
                         <input type="text" placeholder='Nome'  value={name} onChange={e =>setName(e.target.value)} required  />
                         <input type="email" placeholder='E-mail' value={email} onChange={e =>setEmail(e.target.value)} required  />
-                        <input type="text" placeholder='Senha' value={pwd} onChange={e =>setPwd(e.target.value)} required />
-                        <input type="text" placeholder='Confirme a senha'  value = {pwdConfirm} onChange={e =>setPwdConfirm(e.target.value)} required  />
+                        <input type="password" placeholder='Senha' value={pwd} onChange={e =>setPwd(e.target.value)} required />
+                        <input type="password" placeholder='Confirme a senha'  value = {pwdConfirm} onChange={e =>setPwdConfirm(e.target.value)} required  />
                         <button type='submit'> Cadastrar </button>
                     </form>
                 </FormStyle>

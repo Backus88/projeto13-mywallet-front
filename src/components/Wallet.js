@@ -66,7 +66,7 @@ export default function Wallet(){
                             <>
                             {(value > 0)?
                                         <ListRow enable ={true} key={index}>
-                                            <ListDateDesc>
+                                            <ListDateDesc key={index}>
                                                 <h4 >{date}</h4>
                                                 <h6 >{description}</h6>
                                             </ListDateDesc>
@@ -78,7 +78,7 @@ export default function Wallet(){
                                         </ListRow>
                                     :
                                         <ListRow enable ={false} key={index}>
-                                            <ListDateDesc>
+                                            <ListDateDesc key ={index}>
                                                 <h4 >{date}</h4>
                                                 <h6 >{description}</h6>
                                             </ListDateDesc>
@@ -99,10 +99,18 @@ export default function Wallet(){
                         <h4>entrada ou saída</h4>
                     </NoIens>
                 }
-                <AbsoluteList>
-                    <h6>Saldo</h6>
-                    <h5>{parseFloat(total).toFixed(2)}</h5>
-                </AbsoluteList>
+                {(total > -1)?
+                    <AbsoluteList enable={true}>
+                        <h6>Saldo</h6>
+                        <h5>{parseFloat(total).toFixed(2)}</h5>
+                    </AbsoluteList>
+                :
+                    <AbsoluteList enable={false}>
+                        <h6>Saldo</h6>
+                        <h5>{parseFloat(total).toFixed(2)*-1}</h5>
+                    </AbsoluteList>
+                }
+                
             </ListDiv>
             
             <RowDiv>
@@ -275,6 +283,15 @@ export const AbsoluteList = styled.div `
         line-height: 20px;
         color: #000000;
     }
+    h5{
+        font-family: 'Raleway';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        color: ${props =>props.enable? '#03AC00' : '#C70000' };
+        margin-right: 5px;
+    }
     @media (min-width: 700px) {
         bottom: 30%;
         left: 39.1%;
@@ -319,6 +336,7 @@ export const ButtonDiv = styled.div`
 
 export const MapRow = styled.div `
     box-sizing: border-box;
+    width: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
