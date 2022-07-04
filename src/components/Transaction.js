@@ -1,4 +1,5 @@
 import { useContext, React, useState } from 'react';
+import { useLocation } from "react-router-dom";
 import { MainContext } from './App';
 import { ThreeDots } from 'react-loader-spinner';
 import { Link } from 'react-router-dom';
@@ -14,7 +15,9 @@ export default function Transaction (){
     const[disabled, setDisabled]= useState(false);
     const[value, setValue]= useState("");
     const[description, setDescription]= useState("");
-    const type = false;
+    const location = useLocation();
+    const {type} = location.state;
+    console.log(type)
     const navigate = useNavigate();
 
     // Mount the authorizathion token
@@ -27,17 +30,25 @@ export default function Transaction (){
     async function newTransaction(event){
         event.preventDefault();
         setDisabled(true);
-        const body = JSON.stringify({
-            description: description,
-            date: dayjs().format("DD/MM"),
-            value: value
-        });
-
+        let body ;
+        if(!type){
+            body = {
+                description: description,
+                date: dayjs().format("DD/MM"),
+                value: value
+            };
+        }else{
+             body = {
+                description: description,
+                date: dayjs().format("DD/MM"),
+                value: (-1)*(value)
+            };
+        }
         try{
-            const res = await axios.post("localhost:50000/wallet", body, config);
+            const res = await axios.post("http://localhost:5000/wallet", body, config);
             navigate("/wallet");
         }catch(error){
-            alert("Dados nao compativeis");
+            alert(error);
             setDisabled(false);
             setValue("");
             setDescription("");
@@ -47,7 +58,7 @@ export default function Transaction (){
     return(
         <WalletDiv>
             <TransctionDiv>
-                {(type)?
+                {(!type)?
                 <h3>Nova Entrada</h3>
                 :
                 <h3>Nova Saída</h3>
@@ -68,14 +79,14 @@ export default function Transaction (){
                     <form onSubmit={newTransaction}>
                         <input type="number"  placeholder='Valor' value={value} onChange={e => setValue(e.target.value)} required />
                         <input type="text" placeholder='Descrição' value={description} onChange={e=> setDescription((e.target.value))}  required />
-                        <button type='submit'> Entrar </button>
+                        <button type='submit'> {(!type)? "Salvar Entrada": "Salvar Saida"} </button>
                     </form>
                 </FormStyle>
             }
                 
-            <Link to={"/cadastro"} style ={{textDecoration:'none'}}>
+            <Link to={"/wallet"} style ={{textDecoration:'none'}}>
                 <h2>
-                    Não tem uma conta? Cadastre-se!
+                    Voltar
                 </h2>
             </Link>
         </WalletDiv>

@@ -19,17 +19,16 @@ export default function Login(){
     async function signIn(event){
         event.preventDefault();
         setDisabled(true);
-        
-        const body = JSON.stringify({
+        const body = {
                 email: loginEmail,
                 password: loginPassword
-        });
-
+        };
         try{
-            const res = await axios.post("localhost:5000/login",body);
+            const res = await axios.post("http://localhost:5000/login",body);
             const {token, name} = res.data;
             setToken(token);
             setName(name);
+            setDisabled(false);
             navigate("/wallet");
         }catch(error){
             alert("Usuario ou senha incorretos");

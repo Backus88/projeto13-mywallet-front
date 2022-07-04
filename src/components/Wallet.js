@@ -1,7 +1,6 @@
-import { useContext, React, useState } from 'react';
+import { useContext, React, useState, useEffect } from 'react';
 import { MainContext } from './App';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import exitImg from '../assets/exit.svg'
@@ -9,24 +8,95 @@ import exitImg from '../assets/exit.svg'
 export default function Wallet(){
 
     const {name, token} = useContext(MainContext);
-    const[type, setType]= useState(null);
+    const [walletController, setWalletController]= useState(false);
+    const [total, setTotal] = useState("");
+    const [list, setList]= useState([]);
+    const[type, setType]= useState(false);
     const navigate = useNavigate();
+
+    const config ={
+        headers:{
+            Authorization: `Bearer ${token}`
+        }
+    };
+    function goTransaction (type){
+        setType(type);
+        navigate("/transaction",{state:{type}});
+    }
+
+    useEffect(()=>{
+        const going = async ()=>{
+            try{
+                const res = await axios.get("http://localhost:5000/wallet",config);
+                console.log(res);
+                setList([...res.data.wallet]);
+                setTotal(res.data.total);
+            }catch(error){
+                alert(error);
+            }
+        }
+        going();
+    },[walletController]);
 
     return(
         <WalletDiv>
             <RowDiv>
-                <h1>Ola</h1>
+                <h1>Ola, {name}</h1>
                 <img src={exitImg} alt="dont have" />
             </RowDiv>
             <ListDiv>
+                {(list)?
+                    <MapRow>
+                    {list.map((item, index)=>{
+                        const {description, value, date} = item;
+                        return(
+                            <>{(value > 0)?
+                                        <ListRow enable ={true} key={index}>
+                                            <ListDateDesc>
+                                                <h4 >{date}</h4>
+                                                <h6 >{description}</h6>
+                                            </ListDateDesc>
+                                            {(value > 0)?
+                                            <h5>{value}</h5>
+                                            :
+                                            <h5>{value*(-1)}</h5>
+                                            }
+                                        </ListRow>
+                                    :
+                                        <ListRow enable ={false} key={index}>
+                                            <ListDateDesc>
+                                                <h4 >{date}</h4>
+                                                <h6 >{description}</h6>
+                                            </ListDateDesc>
+                                            {(value > 0)?
+                                            <h5>{value}</h5>
+                                            :
+                                            <h5>{value*(-1)}</h5>
+                                            }
+                                        </ListRow>
+                                }
+                            </>
+                        )
+                    })}
+                    </MapRow>
+                :
+                    <NoIens>
+                        <h4>Não há registros de</h4>
+                        <h4>entrada ou saída</h4>
+                    </NoIens>
+                }
+                <AbsoluteList>
+                    <h6>Saldo</h6>
+                    <h5>{total}</h5>
+                </AbsoluteList>
             </ListDiv>
             
             <RowDiv>
-                <ButtonDiv>
+                <ButtonDiv onClick={()=>goTransaction(false)}>
                     <ion-icon name="add-circle-outline"></ion-icon>
                     <h3>Nova Entrada</h3>
                 </ButtonDiv>
-                <ButtonDiv>
+                <ButtonDiv onClick={()=>goTransaction(true)}>
                     <ion-icon name="remove-circle-outline"></ion-icon>
                     <h3>Nova Saída</h3>
                 </ButtonDiv>
@@ -89,7 +159,10 @@ export const WalletDiv = styled.div`
 `;
 
 export const ListDiv = styled.div `
+    position: relative;
     display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
     width: 326px;
     height: 446px;
     background: #FFFFFF;
@@ -99,7 +172,93 @@ export const ListDiv = styled.div `
     ::-webkit-scrollbar{
         width: 0px;
     }
-`
+    h4{
+        font-family: 'Raleway';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 23px;
+        text-align: center;
+        color: #868686;
+    }
+`;
+
+export const NoIens = styled.div `
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const ListRow = styled.div `
+    box-sizing: border-box;
+    padding: 15px 15px 0px 15px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 326px;
+    h5{
+        font-family: 'Raleway';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        color: ${props =>props.enable? '#03AC00' : '#C70000' };
+        margin-right: 5px;
+    }
+`;
+
+export const ListDateDesc = styled.div `
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: auto;
+    max-width: 250px;
+    word-break: break-word;
+    h4{
+        font-family: 'Raleway';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        color: #C6C6C6;
+        margin-right: 5px;
+    }
+    h6{
+        font-family: 'Raleway';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+        color:  black ;
+        margin-right: 5px;
+    }
+`;
+
+export const AbsoluteList = styled.div `
+    position: absolute;
+    box-sizing: border-box ;
+    display: flex;
+    height: auto;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    bottom: 0;
+    height: auto;
+    padding: 15px;
+    h6{
+        font-family: 'Raleway';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 20px;
+        color: #000000;
+    }
+`;
 
 export const RowDiv = styled.div`
     box-sizing: border-box;
@@ -135,4 +294,10 @@ export const ButtonDiv = styled.div`
         line-height: 20px;
         color: #FFFFFF;
     }
+`;
+
+export const MapRow = styled.div `
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 `;

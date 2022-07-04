@@ -17,7 +17,7 @@ export default function App(){
                 <Routes>
                     <Route path="/" element={<Login  />} />
                     <Route path="/register" element = {<Register/>} />
-                    <Route path = "/wallet" element ={ <Wallet/>}/>
+                    <Route path ="/wallet" element ={ <Wallet/>}/>
                     <Route path="/transaction" element ={ <Transaction/>} />
                 </Routes>
             </MainContext.Provider>
