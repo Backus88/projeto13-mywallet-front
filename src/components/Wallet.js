@@ -122,6 +122,7 @@ export default function Wallet(){
 }
 
 export const WalletDiv = styled.div`
+    position: relative;
     padding-top: 10px;
     display: flex;
     min-height: 100vh;
@@ -173,7 +174,6 @@ export const WalletDiv = styled.div`
 `;
 
 export const ListDiv = styled.div `
-    position: relative;
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
@@ -207,13 +207,14 @@ export const NoIens = styled.div `
 
 export const ListRow = styled.div `
     box-sizing: border-box;
-    padding: 15px 15px 0px 15px;
+    padding: 0px 15px 0px 15px;
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-between;
     width: 100%;
     max-width: 326px;
+    margin-bottom: 20px;
     h5{
         font-family: 'Raleway';
         font-style: normal;
@@ -260,10 +261,12 @@ export const AbsoluteList = styled.div `
     height: auto;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
-    bottom: 0;
+    width: 90%;
+    bottom: 22%;
+    left: 5.5%;
     height: auto;
     padding: 15px;
+    max-width: 360px;
     h6{
         font-family: 'Raleway';
         font-style: normal;
@@ -272,6 +275,10 @@ export const AbsoluteList = styled.div `
         line-height: 20px;
         color: #000000;
     }
+    @media (min-width: 700px) {
+        bottom: 30%;
+        left: 39.1%;
+  }
 `;
 
 export const RowDiv = styled.div`
@@ -311,9 +318,11 @@ export const ButtonDiv = styled.div`
 `;
 
 export const MapRow = styled.div `
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    padding: 20px 0px;
 `;
 
 export const ImgDiv = styled.div`
