@@ -130,7 +130,7 @@ export default function Wallet(){
 }
 
 export const WalletDiv = styled.div`
-    position: relative;
+    
     padding-top: 10px;
     display: flex;
     min-height: 100vh;
@@ -182,6 +182,7 @@ export const WalletDiv = styled.div`
 `;
 
 export const ListDiv = styled.div `
+    position: relative;
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
@@ -190,10 +191,6 @@ export const ListDiv = styled.div `
     background: #FFFFFF;
     border-radius: 5px;
     margin: 14px 0px;
-    overflow-y: scroll;
-    ::-webkit-scrollbar{
-        width: 0px;
-    }
     h4{
         font-family: 'Raleway';
         font-style: normal;
@@ -222,7 +219,7 @@ export const ListRow = styled.div `
     justify-content: space-between;
     width: 100%;
     max-width: 326px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     h5{
         font-family: 'Raleway';
         font-style: normal;
@@ -269,9 +266,9 @@ export const AbsoluteList = styled.div `
     height: auto;
     align-items: center;
     justify-content: space-between;
-    width: 90%;
-    bottom: 22%;
-    left: 5.5%;
+    width: 100%;
+    bottom: 0;
+    left: 0;
     height: auto;
     padding: 15px;
     max-width: 360px;
@@ -292,10 +289,6 @@ export const AbsoluteList = styled.div `
         color: ${props =>props.enable? '#03AC00' : '#C70000' };
         margin-right: 5px;
     }
-    @media (min-width: 700px) {
-        bottom: 30%;
-        left: 39.1%;
-  }
 `;
 
 export const RowDiv = styled.div`
@@ -341,6 +334,11 @@ export const MapRow = styled.div `
     flex-direction: row;
     flex-wrap: wrap;
     padding: 20px 0px;
+    height: 90%;
+    overflow-y: scroll;
+    ::-webkit-scrollbar{
+        width: 0px;
+    }
 `;
 
 export const ImgDiv = styled.div`
