@@ -331,10 +331,13 @@ export const MapRow = styled.div `
     box-sizing: border-box;
     width: 100%;
     display: flex;
+    align-items: center;
+    justify-content: flex-start;
     flex-direction: row;
     flex-wrap: wrap;
     padding: 20px 0px;
-    height: 90%;
+    height: auto;
+    max-height: 90%;
     overflow-y: scroll;
     ::-webkit-scrollbar{
         width: 0px;
