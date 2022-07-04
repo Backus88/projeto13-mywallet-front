@@ -138,10 +138,10 @@ export const FormStyle = styled.div `
     }
 `;
 export const MainLoader = styled.div `
-    width: 303px;
+    width: 326px;
     height: 45px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #52B6FF;
+    background: #A328D6;
 `
