@@ -26,7 +26,7 @@ export default function Wallet(){
 
     async function deleteUser (){
         try{
-            await axios.delete("http://localhost:5000/wallet",config);
+            await axios.delete("https://wallet-backend-driven.herokuapp.com/wallet",config);
             setList([...[]]);
             setTotal("");
             navigate("/");
@@ -38,7 +38,7 @@ export default function Wallet(){
     useEffect(()=>{
         const going = async ()=>{
             try{
-                const res = await axios.get("http://localhost:5000/wallet",config);
+                const res = await axios.get("https://wallet-backend-driven.herokuapp.com/wallet",config);
                 console.log(res);
                 setList([...res.data.wallet]);
                 setTotal(res.data.total);

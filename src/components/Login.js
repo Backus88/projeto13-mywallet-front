@@ -24,7 +24,7 @@ export default function Login(){
                 password: loginPassword
         };
         try{
-            const res = await axios.post("http://localhost:5000/login",body);
+            const res = await axios.post("https://wallet-backend-driven.herokuapp.com/login",body);
             const {token, name} = res.data;
             setToken(token);
             setName(name);

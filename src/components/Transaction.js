@@ -46,7 +46,7 @@ export default function Transaction (){
             };
         }
         try{
-            const res = await axios.post("http://localhost:5000/wallet", body, config);
+            const res = await axios.post("https://wallet-backend-driven.herokuapp.com/wallet", body, config);
             navigate("/wallet");
         }catch(error){
             alert(error);

@@ -26,7 +26,7 @@ export default function Register(){
         };
         console.log(body);
         try{
-            const res = await axios.post("http://localhost:5000/register", body);
+            const res = await axios.post("https://wallet-backend-driven.herokuapp.com/register", body);
             setDisabled(false);
             navigate("/");
 
