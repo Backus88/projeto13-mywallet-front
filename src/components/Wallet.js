@@ -24,6 +24,17 @@ export default function Wallet(){
         navigate("/transaction",{state:{type}});
     }
 
+    async function deleteUser (){
+        try{
+            await axios.delete("http://localhost:5000/wallet",config);
+            setList([...[]]);
+            setTotal("");
+            navigate("/");
+        }catch(error){
+            alert(error);
+        }
+    }
+
     useEffect(()=>{
         const going = async ()=>{
             try{
@@ -42,7 +53,9 @@ export default function Wallet(){
         <WalletDiv>
             <RowDiv>
                 <h1>Ola, {name}</h1>
-                <img src={exitImg} alt="dont have" />
+                <ImgDiv onClick={()=>deleteUser()}>
+                    <img src={exitImg} alt="dont have" />
+                </ImgDiv>
             </RowDiv>
             <ListDiv>
                 {(list)?
@@ -50,7 +63,8 @@ export default function Wallet(){
                     {list.map((item, index)=>{
                         const {description, value, date} = item;
                         return(
-                            <>{(value > 0)?
+                            <>
+                            {(value > 0)?
                                         <ListRow enable ={true} key={index}>
                                             <ListDateDesc>
                                                 <h4 >{date}</h4>
@@ -87,7 +101,7 @@ export default function Wallet(){
                 }
                 <AbsoluteList>
                     <h6>Saldo</h6>
-                    <h5>{total}</h5>
+                    <h5>{parseFloat(total).toFixed(2)}</h5>
                 </AbsoluteList>
             </ListDiv>
             
@@ -300,4 +314,9 @@ export const MapRow = styled.div `
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+`;
+
+export const ImgDiv = styled.div`
+    width: auto;
+    height: auto;
 `;

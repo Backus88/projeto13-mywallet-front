@@ -31,17 +31,18 @@ export default function Transaction (){
         event.preventDefault();
         setDisabled(true);
         let body ;
+        const newValue =  parseFloat(value?.replace(',', '.')).toFixed(2);
         if(!type){
             body = {
                 description: description,
                 date: dayjs().format("DD/MM"),
-                value: value
+                value: newValue
             };
         }else{
              body = {
                 description: description,
                 date: dayjs().format("DD/MM"),
-                value: (-1)*(value)
+                value: (-1)*(newValue)
             };
         }
         try{
