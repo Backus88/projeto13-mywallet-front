@@ -26,7 +26,7 @@ export default function Wallet(){
 
     async function deleteUser (){
         try{
-            await axios.delete("hhttps://wallet-backend-driven.herokuapp.com/wallet",config);
+            await axios.delete("https://wallet-backend-driven.herokuapp.com/wallet",config);
             setList([...[]]);
             setTotal("");
             navigate("/");
