@@ -26,7 +26,7 @@ export default function Wallet(){
 
     async function deleteUser (){
         try{
-            await axios.delete("https://wallet-backend-driven.herokuapp.com/wallet",config);
+            await axios.delete("hhttps://wallet-backend-driven.herokuapp.com/wallet",config);
             setList([...[]]);
             setTotal("");
             navigate("/");
@@ -71,9 +71,9 @@ export default function Wallet(){
                                                 <h6 >{description}</h6>
                                             </ListDateDesc>
                                             {(value > 0)?
-                                            <h5>{value}</h5>
+                                            <h5>{value.toFixed(2).replace('.',',')}</h5>
                                             :
-                                            <h5>{value*(-1)}</h5>
+                                            <h5>{value.toFixed(2).replace('.',',')*(-1)}</h5>
                                             }
                                         </ListRow>
                                     :
@@ -102,12 +102,12 @@ export default function Wallet(){
                 {(total > -1)?
                     <AbsoluteList enable={true}>
                         <h6>Saldo</h6>
-                        <h5>{parseFloat(total).toFixed(2)}</h5>
+                        <h5>{parseFloat(total).toFixed(2).replace('.',',')}</h5>
                     </AbsoluteList>
                 :
                     <AbsoluteList enable={false}>
                         <h6>Saldo</h6>
-                        <h5>{parseFloat(total).toFixed(2)*-1}</h5>
+                        <h5>{parseFloat(total).toFixed(2).replace('.',',')*-1}</h5>
                     </AbsoluteList>
                 }
                 
